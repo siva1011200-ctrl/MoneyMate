@@ -97,7 +97,24 @@ class RegisterResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
     user: UserResponse
-    # =========================
+
+
+class PasswordChange(BaseModel):
+    current_password: str
+    new_password: str = Field(min_length=12, max_length=128)
+
+
+class SettingsResponse(BaseModel):
+    dark_mode: bool
+    email_notifications: bool
+
+
+class SettingsUpdate(BaseModel):
+    dark_mode: Optional[bool] = None
+    email_notifications: Optional[bool] = None
+
+
+# =========================
 # Income Schemas
 # =========================
 
@@ -187,7 +204,11 @@ class BudgetResponse(BaseModel):
     year: int
     alert: bool = False
     user_id: int
-    # =========================
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+# =========================
 # Savings Goal Schemas
 # =========================
 
@@ -225,6 +246,8 @@ class TransactionResponse(BaseModel):
     amount: Decimal
     description: str
 
+    model_config = ConfigDict(from_attributes=True)
+
 
 # =========================
 # Dashboard / Analytics
@@ -236,6 +259,8 @@ class DashboardSummary(BaseModel):
     total_savings: Decimal
     savings_percentage: float
     budget_usage: float
+    model_config = ConfigDict(from_attributes=True)
+
     recent_transactions: List[TransactionResponse]
 
 
