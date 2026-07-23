@@ -233,6 +233,8 @@ class SavingsGoalResponse(BaseModel):
     completed: bool
     user_id: int
 
+    model_config = ConfigDict(from_attributes=True)
+
 
 # =========================
 # Transaction Schemas
@@ -259,9 +261,9 @@ class DashboardSummary(BaseModel):
     total_savings: Decimal
     savings_percentage: float
     budget_usage: float
-    model_config = ConfigDict(from_attributes=True)
-
     recent_transactions: List[TransactionResponse]
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class MonthlyAnalyticsItem(BaseModel):

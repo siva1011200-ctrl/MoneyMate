@@ -29,9 +29,9 @@ const fetchIncome = async()=>{
 
 try{
 
-const response = await API.get("/income/");
+const response = await API.get("/income");
 
-setIncomeList(response.data);
+setIncomeList(response.data?.items || []);
 
 }
 
@@ -90,7 +90,7 @@ try{
 
 
 await API.post(
-"/income/",
+"/income",
 {
 
 source:form.source,
