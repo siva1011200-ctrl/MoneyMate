@@ -164,7 +164,7 @@ className="border-b"
 
 
 <td className="p-3">
-{item.date}
+{new Date(item.date).toLocaleDateString()}
 </td>
 
 

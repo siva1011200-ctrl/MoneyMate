@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import MainLayout from "../layouts/MainLayout";
 import Card from "../components/Card";
 
-import API from "../api/axios";
+import FinanceContext from "../context/FinanceContext";
 
 
 function Income(){
 
 
-const [incomeList,setIncomeList] = useState([]);
+const { incomeList, addIncome } = useContext(FinanceContext);
 
 
 const [form,setForm] = useState({
@@ -23,41 +23,13 @@ description:""
 
 
 
-// Fetch income data
-
-const fetchIncome = async()=>{
-
-try{
-
-const response = await API.get("/income");
-
-setIncomeList(response.data?.items || []);
-
-}
-
-catch(error){
-
-console.log(error);
-
-}
-
-};
-
-
-
 useEffect(()=>{
 
-const loadIncome = async()=>{
+if (incomeList.length > 0) {
+  // Data already loaded by FinanceProvider
+}
 
-await fetchIncome();
-
-};
-
-
-loadIncome();
-
-
-},[]);
+}, [incomeList]);
 
 
 
@@ -88,44 +60,30 @@ e.preventDefault();
 
 try{
 
-
-await API.post(
-"/income",
-{
-
-source:form.source,
-
-amount:Number(form.amount),
-
-date:form.date,
-
-description:form.description
-
-}
-
-);
-
-
-
-setForm({
-
-source:"",
-amount:"",
-date:"",
-description:""
-
+const result = await addIncome({
+  source: form.source,
+  amount: Number(form.amount),
+  date: form.date,
+  description: form.description
 });
 
-
-
-fetchIncome();
-
+if (result.success) {
+  setForm({
+    source:"",
+    amount:"",
+    date:"",
+    description:""
+  });
+} else {
+  alert(result.error);
+}
 
 }
 
 catch(error){
 
 console.log(error);
+alert("Failed to add income");
 
 }
 
@@ -220,7 +178,7 @@ className="border-b"
 
 
 <td className="p-3">
-{item.date}
+{new Date(item.date).toLocaleDateString()}
 </td>
 
 
