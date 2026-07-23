@@ -34,8 +34,16 @@ const Register = () => {
       if (response.data) {
         navigate("/login");
       }
+
     } catch (err) {
-      setError(err.response?.data?.detail || "Registration failed");
+      const detail = err.response?.data?.detail;
+
+      if (Array.isArray(detail)) {
+        setError(detail[0]?.msg || "Registration failed");
+      } else {
+        setError(detail || "Registration failed");
+      }
+
     } finally {
       setLoading(false);
     }
