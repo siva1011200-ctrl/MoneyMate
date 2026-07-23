@@ -29,24 +29,32 @@ class UserCreate(BaseModel):
 
     @field_validator("type")
     @classmethod
-    def validate_type(cls, value: str) -> str:
+    def validate_type(cls, value: str):
         allowed = {"student", "employee", "freelancer"}
-        normalized = value.lower()
-        if normalized not in allowed:
-            raise ValueError("type must be student, employee, or freelancer")
-        return normalized
+        value = value.lower()
+
+        if value not in allowed:
+            raise ValueError(
+                "type must be student, employee, or freelancer"
+            )
+
+        return value
 
     @field_validator("password")
     @classmethod
-    def validate_password_strength(cls, value: str) -> str:
+    def validate_password_strength(cls, value: str):
         if not any(c.isupper() for c in value):
             raise ValueError("Password must contain uppercase letter")
+
         if not any(c.islower() for c in value):
             raise ValueError("Password must contain lowercase letter")
+
         if not any(c.isdigit() for c in value):
             raise ValueError("Password must contain digit")
+
         if not any(c in "!@#$%^&*()_+-=[]{}|;:,.<>?" for c in value):
             raise ValueError("Password must contain special character")
+
         return value
 
 
@@ -68,7 +76,7 @@ class UserResponse(BaseModel):
 
 
 class UserUpdate(BaseModel):
-    name: Optional[str] = Field(default=None, min_length=1, max_length=120)
+    name: Optional[str] = Field(None, min_length=1, max_length=120)
     email: Optional[EmailStr] = None
     type: Optional[str] = None
 
@@ -89,9 +97,7 @@ class RegisterResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
     user: UserResponse
-
-
-# =========================
+    # =========================
 # Income Schemas
 # =========================
 
@@ -103,8 +109,8 @@ class IncomeCreate(BaseModel):
 
 
 class IncomeUpdate(BaseModel):
-    source: Optional[str] = Field(default=None, min_length=1, max_length=120)
-    amount: Optional[Decimal] = Field(default=None, gt=0)
+    source: Optional[str] = Field(None, min_length=1, max_length=120)
+    amount: Optional[Decimal] = Field(None, gt=0)
     date: Optional[datetime] = None
     description: Optional[str] = None
 
@@ -118,7 +124,9 @@ class IncomeResponse(BaseModel):
     user_id: int
 
     model_config = ConfigDict(from_attributes=True)
-    # =========================
+
+
+# =========================
 # Expense Schemas
 # =========================
 
@@ -130,8 +138,8 @@ class ExpenseCreate(BaseModel):
 
 
 class ExpenseUpdate(BaseModel):
-    category: Optional[str] = Field(default=None, min_length=1, max_length=80)
-    amount: Optional[Decimal] = Field(default=None, gt=0)
+    category: Optional[str] = Field(None, min_length=1, max_length=80)
+    amount: Optional[Decimal] = Field(None, gt=0)
     date: Optional[datetime] = None
     description: Optional[str] = None
 
@@ -154,17 +162,17 @@ class ExpenseResponse(BaseModel):
 class BudgetCreate(BaseModel):
     category: str = Field(min_length=1, max_length=80)
     limit: Decimal = Field(gt=0, alias="limit")
-    month: Optional[int] = Field(default=None, ge=1, le=12)
-    year: Optional[int] = Field(default=None, ge=2000, le=2100)
+    month: Optional[int] = Field(None, ge=1, le=12)
+    year: Optional[int] = Field(None, ge=2000, le=2100)
 
     model_config = ConfigDict(populate_by_name=True)
 
 
 class BudgetUpdate(BaseModel):
-    category: Optional[str] = Field(default=None, min_length=1, max_length=80)
-    limit: Optional[Decimal] = Field(default=None, gt=0, alias="limit")
-    month: Optional[int] = Field(default=None, ge=1, le=12)
-    year: Optional[int] = Field(default=None, ge=2000, le=2100)
+    category: Optional[str] = Field(None, min_length=1, max_length=80)
+    limit: Optional[Decimal] = Field(None, gt=0, alias="limit")
+    month: Optional[int] = Field(None, ge=1, le=12)
+    year: Optional[int] = Field(None, ge=2000, le=2100)
 
     model_config = ConfigDict(populate_by_name=True)
 
@@ -179,9 +187,7 @@ class BudgetResponse(BaseModel):
     year: int
     alert: bool = False
     user_id: int
-
-
-# =========================
+    # =========================
 # Savings Goal Schemas
 # =========================
 
@@ -192,9 +198,9 @@ class SavingsGoalCreate(BaseModel):
 
 
 class SavingsGoalUpdate(BaseModel):
-    goal: Optional[str] = Field(default=None, min_length=1, max_length=200)
-    target: Optional[Decimal] = Field(default=None, gt=0)
-    saved: Optional[Decimal] = Field(default=None, ge=0)
+    goal: Optional[str] = Field(None, min_length=1, max_length=200)
+    target: Optional[Decimal] = Field(None, gt=0)
+    saved: Optional[Decimal] = Field(None, ge=0)
 
 
 class SavingsGoalResponse(BaseModel):
