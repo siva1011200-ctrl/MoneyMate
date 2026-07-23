@@ -19,7 +19,6 @@ class PaginatedResponse(BaseModel, Generic[T]):
 # User Schemas
 # =========================
 
-
 class UserCreate(BaseModel):
     name: str = Field(min_length=1, max_length=120)
     email: EmailStr
@@ -41,13 +40,13 @@ class UserCreate(BaseModel):
     @classmethod
     def validate_password_strength(cls, value: str) -> str:
         if not any(c.isupper() for c in value):
-            raise ValueError("Password must contain at least one uppercase letter")
+            raise ValueError("Password must contain uppercase letter")
         if not any(c.islower() for c in value):
-            raise ValueError("Password must contain at least one lowercase letter")
+            raise ValueError("Password must contain lowercase letter")
         if not any(c.isdigit() for c in value):
-            raise ValueError("Password must contain at least one digit")
+            raise ValueError("Password must contain digit")
         if not any(c in "!@#$%^&*()_+-=[]{}|;:,.<>?" for c in value):
-            raise ValueError("Password must contain at least one special character")
+            raise ValueError("Password must contain special character")
         return value
 
 
@@ -73,35 +72,6 @@ class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
     type: Optional[str] = None
 
-    @field_validator("type")
-    @classmethod
-    def validate_type(cls, value: Optional[str]) -> Optional[str]:
-        if value is None:
-            return value
-        allowed = {"student", "employee", "freelancer"}
-        normalized = value.lower()
-        if normalized not in allowed:
-            raise ValueError("type must be student, employee, or freelancer")
-        return normalized
-
-
-class PasswordChange(BaseModel):
-    current_password: str
-    new_password: str = Field(min_length=12, max_length=128)
-
-    @field_validator("new_password")
-    @classmethod
-    def validate_password_strength(cls, value: str) -> str:
-        if not any(c.isupper() for c in value):
-            raise ValueError("Password must contain at least one uppercase letter")
-        if not any(c.islower() for c in value):
-            raise ValueError("Password must contain at least one lowercase letter")
-        if not any(c.isdigit() for c in value):
-            raise ValueError("Password must contain at least one digit")
-        if not any(c in "!@#$%^&*()_+-=[]{}|;:,.<>?" for c in value):
-            raise ValueError("Password must contain at least one special character")
-        return value
-
 
 class Token(BaseModel):
     access_token: str
@@ -121,31 +91,20 @@ class RegisterResponse(BaseModel):
     user: UserResponse
 
 
-class SettingsUpdate(BaseModel):
-    dark_mode: Optional[bool] = None
-    email_notifications: Optional[bool] = None
-
-
-class SettingsResponse(BaseModel):
-    dark_mode: bool
-    email_notifications: bool
-
-
 # =========================
 # Income Schemas
 # =========================
 
-
 class IncomeCreate(BaseModel):
     source: str = Field(min_length=1, max_length=120)
-    amount: Decimal = Field(gt=0, decimal_places=2)
+    amount: Decimal = Field(gt=0)
     date: datetime
     description: str = ""
 
 
 class IncomeUpdate(BaseModel):
     source: Optional[str] = Field(default=None, min_length=1, max_length=120)
-    amount: Optional[Decimal] = Field(default=None, gt=0, decimal_places=2)
+    amount: Optional[Decimal] = Field(default=None, gt=0)
     date: Optional[datetime] = None
     description: Optional[str] = None
 
@@ -159,23 +118,20 @@ class IncomeResponse(BaseModel):
     user_id: int
 
     model_config = ConfigDict(from_attributes=True)
-
-
-# =========================
+    # =========================
 # Expense Schemas
 # =========================
 
-
 class ExpenseCreate(BaseModel):
     category: str = Field(min_length=1, max_length=80)
-    amount: Decimal = Field(gt=0, decimal_places=2)
+    amount: Decimal = Field(gt=0)
     date: datetime
     description: str = ""
 
 
 class ExpenseUpdate(BaseModel):
     category: Optional[str] = Field(default=None, min_length=1, max_length=80)
-    amount: Optional[Decimal] = Field(default=None, gt=0, decimal_places=2)
+    amount: Optional[Decimal] = Field(default=None, gt=0)
     date: Optional[datetime] = None
     description: Optional[str] = None
 
@@ -195,10 +151,9 @@ class ExpenseResponse(BaseModel):
 # Budget Schemas
 # =========================
 
-
 class BudgetCreate(BaseModel):
     category: str = Field(min_length=1, max_length=80)
-    limit: Decimal = Field(gt=0, decimal_places=2, alias="limit")
+    limit: Decimal = Field(gt=0, alias="limit")
     month: Optional[int] = Field(default=None, ge=1, le=12)
     year: Optional[int] = Field(default=None, ge=2000, le=2100)
 
@@ -207,7 +162,7 @@ class BudgetCreate(BaseModel):
 
 class BudgetUpdate(BaseModel):
     category: Optional[str] = Field(default=None, min_length=1, max_length=80)
-    limit: Optional[Decimal] = Field(default=None, gt=0, decimal_places=2, alias="limit")
+    limit: Optional[Decimal] = Field(default=None, gt=0, alias="limit")
     month: Optional[int] = Field(default=None, ge=1, le=12)
     year: Optional[int] = Field(default=None, ge=2000, le=2100)
 
@@ -230,17 +185,16 @@ class BudgetResponse(BaseModel):
 # Savings Goal Schemas
 # =========================
 
-
 class SavingsGoalCreate(BaseModel):
     goal: str = Field(min_length=1, max_length=200)
-    target: Decimal = Field(gt=0, decimal_places=2)
-    saved: Decimal = Field(default=0, ge=0, decimal_places=2)
+    target: Decimal = Field(gt=0)
+    saved: Decimal = Field(default=0, ge=0)
 
 
 class SavingsGoalUpdate(BaseModel):
     goal: Optional[str] = Field(default=None, min_length=1, max_length=200)
-    target: Optional[Decimal] = Field(default=None, gt=0, decimal_places=2)
-    saved: Optional[Decimal] = Field(default=None, ge=0, decimal_places=2)
+    target: Optional[Decimal] = Field(default=None, gt=0)
+    saved: Optional[Decimal] = Field(default=None, ge=0)
 
 
 class SavingsGoalResponse(BaseModel):
@@ -257,7 +211,6 @@ class SavingsGoalResponse(BaseModel):
 # Transaction Schemas
 # =========================
 
-
 class TransactionResponse(BaseModel):
     id: int
     date: datetime
@@ -270,7 +223,6 @@ class TransactionResponse(BaseModel):
 # =========================
 # Dashboard / Analytics
 # =========================
-
 
 class DashboardSummary(BaseModel):
     total_income: Decimal
@@ -301,7 +253,6 @@ class AnalyticsResponse(BaseModel):
 # =========================
 # Notifications
 # =========================
-
 
 class NotificationResponse(BaseModel):
     id: int
