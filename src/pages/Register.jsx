@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { registerUser } from "../services/api";
+import { userAPI } from "../services/api-service";
 
 const Register = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
+    type: "student",
   });
 
   const [error, setError] = useState("");
@@ -28,18 +29,14 @@ const Register = () => {
       setLoading(true);
       setError("");
 
-      const response = await registerUser(formData);
+      const response = await userAPI.register(formData);
 
-      if (response.error) {
-        setError(response.error);
-        return;
+      if (response.data) {
+        navigate("/login");
       }
-
-      navigate("/login");
-
-    } catch {
-  setError("Registration failed");
-} finally {
+    } catch (err) {
+      setError(err.response?.data?.detail || "Registration failed");
+    } finally {
       setLoading(false);
     }
   };
@@ -63,9 +60,9 @@ const Register = () => {
 
           <input
             type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
+            name="name"
+            placeholder="Full Name"
+            value={formData.name}
             onChange={handleChange}
             className="w-full border p-2 rounded"
             required
@@ -84,12 +81,24 @@ const Register = () => {
           <input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="Password (min 12 characters)"
             value={formData.password}
             onChange={handleChange}
             className="w-full border p-2 rounded"
             required
+            minLength={12}
           />
+
+          <select
+            name="type"
+            value={formData.type}
+            onChange={handleChange}
+            className="w-full border p-2 rounded"
+          >
+            <option value="student">Student</option>
+            <option value="employee">Employee</option>
+            <option value="freelancer">Freelancer</option>
+          </select>
 
           <button
             type="submit"
