@@ -80,6 +80,7 @@ def list_budgets(
 
 
 @router.post("/", response_model=BudgetResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=BudgetResponse, status_code=status.HTTP_201_CREATED)
 def create_budget(
     payload: BudgetCreate,
     db: Session = Depends(get_db),

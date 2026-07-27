@@ -44,6 +44,7 @@ def list_savings_goals(
 
 
 @router.post("/", response_model=SavingsGoalResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=SavingsGoalResponse, status_code=status.HTTP_201_CREATED)
 def create_savings_goal(
     payload: SavingsGoalCreate,
     db: Session = Depends(get_db),
