@@ -58,6 +58,7 @@ def list_income(
 
 
 @router.post("/", response_model=IncomeResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=IncomeResponse, status_code=status.HTTP_201_CREATED)
 def create_income(
     payload: IncomeCreate,
     db: Session = Depends(get_db),
