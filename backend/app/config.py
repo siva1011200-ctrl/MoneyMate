@@ -5,11 +5,7 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-load_dotenv(BASE_DIR / ".env")
-
-# Also try loading from app directory if parent .env doesn't exist
-if not os.getenv("JWT_SECRET_KEY"):
-    load_dotenv(Path(__file__).resolve().parent / ".env")
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
 
 DATABASE_URL = os.getenv(

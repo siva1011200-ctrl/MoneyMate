@@ -108,9 +108,9 @@ def dashboard_summary(
         budget_usage = round(float((spent_total / limit_total) * 100), 2) if limit_total else 0
 
     return DashboardSummary(
-        total_income=float(round(total_income, 2)),
-        total_expense=float(round(total_expense, 2)),
-        total_savings=float(round(total_savings, 2)),
+        total_income=total_income,
+        total_expense=total_expense,
+        total_savings=total_savings,
         savings_percentage=savings_percentage,
         budget_usage=budget_usage,
         recent_transactions=transactions[:10],

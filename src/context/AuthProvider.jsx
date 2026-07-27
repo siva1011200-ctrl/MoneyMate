@@ -67,12 +67,17 @@ function AuthProvider({ children }) {
   };
 
   // Validate token on mount
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (token && !user) {
       // Token exists but no user data - clear invalid state
-      logout();
+      setUser(null);
+      setToken(null);
+      localStorage.removeItem("user");
+      localStorage.removeItem("access_token");
     }
   }, [token, user]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // Refresh user data periodically
   useEffect(() => {

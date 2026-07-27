@@ -80,6 +80,17 @@ class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
     type: Optional[str] = None
 
+    @field_validator("type")
+    @classmethod
+    def validate_type(cls, value: str):
+        if value is None:
+            return value
+        allowed = {"student", "employee", "freelancer"}
+        value = value.lower()
+        if value not in allowed:
+            raise ValueError("type must be student, employee, or freelancer")
+        return value
+
 
 class Token(BaseModel):
     access_token: str

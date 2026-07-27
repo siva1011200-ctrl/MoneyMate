@@ -7,11 +7,11 @@ import AuthContext from "../context/AuthContext";
 function ProtectedRoute({children}){
 
 
-const { user } = useContext(AuthContext);
+const { user, token } = useContext(AuthContext);
 
 
 
-if(!user){
+if(!user || !token){
 
 return <Navigate to="/login" />;
 

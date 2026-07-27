@@ -15,6 +15,7 @@ router = APIRouter(prefix="/income", tags=["Income"])
 
 
 @router.get("/", response_model=PaginatedResponse[IncomeResponse])
+@router.get("", response_model=PaginatedResponse[IncomeResponse])
 def list_income(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 
 import MainLayout from "../layouts/MainLayout";
 import Card from "../components/Card";
@@ -23,13 +23,6 @@ description:""
 
 
 
-useEffect(()=>{
-
-if (incomeList.length > 0) {
-  // Data already loaded by FinanceProvider
-}
-
-}, [incomeList]);
 
 
 
@@ -80,9 +73,8 @@ if (result.success) {
 
 }
 
-catch(error){
+catch{
 
-console.log(error);
 alert("Failed to add income");
 
 }
@@ -311,6 +303,7 @@ placeholder="Description"
 
 
 <button
+type="submit"
 
 className="
 bg-blue-600

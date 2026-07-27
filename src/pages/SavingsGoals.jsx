@@ -46,8 +46,7 @@ const handleSubmit = async (e) => {
     } else {
       alert(result.error);
     }
-  } catch (error) {
-    console.log(error);
+  } catch {
     alert("Failed to add savings goal");
   }
 };
@@ -137,7 +136,7 @@ rounded-full
 
 style={{
 
-width:`${(goal.saved / goal.target) * 100}%`
+width:`${goal.target ? (goal.saved / goal.target) * 100 : 0}%`
 
 }}
 
@@ -158,7 +157,7 @@ font-bold
 
 {
 Math.round(
-(goal.saved / goal.target) * 100
+goal.target ? (goal.saved / goal.target) * 100 : 0
 )
 }%
 

@@ -51,7 +51,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
         db.rollback()
         raise HTTPException(status_code=500, detail="Registration failed") from exc
 
-    token = create_access_token({"sub": str(new_user.id), "email": new_user.email})
+    token = create_access_token({"sub": str(new_user.id)})
 
     return RegisterResponse(
         message="User registered successfully",
@@ -67,7 +67,7 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     if not existing_user or not verify_password(user.password, existing_user.password):
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
-    token = create_access_token({"sub": str(existing_user.id), "email": existing_user.email})
+    token = create_access_token({"sub": str(existing_user.id)})
 
     return LoginResponse(
         access_token=token,

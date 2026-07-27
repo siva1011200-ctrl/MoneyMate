@@ -43,7 +43,7 @@ min-h-screen
 flex
 items-center
 justify-center
-bg-linear-to-br
+bg-gradient-to-br
 from-blue-100
 to-indigo-200
 p-6

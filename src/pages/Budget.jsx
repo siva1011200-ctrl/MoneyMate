@@ -49,8 +49,7 @@ const handleSubmit = async (e) => {
     } else {
       alert(result.error);
     }
-  } catch (error) {
-    console.log(error);
+  } catch {
     alert("Failed to add budget");
   }
 };
@@ -101,7 +100,7 @@ gap-6
 budgetList.map((item)=>(
 
 
-<Card key={item.category}>
+<Card key={item.id}>
 
 
 <h3 className="
@@ -144,7 +143,7 @@ rounded-full
 
 style={{
 
-width:`${(item.spent/item.limit)*100}%`
+width:`${item.limit ? (item.spent/item.limit)*100 : 0}%`
 
 }}
 
@@ -166,7 +165,7 @@ text-sm
 >
 
 {
-(item.spent/item.limit)*100 >= 80
+item.limit && (item.spent/item.limit)*100 >= 80
 
 ?
 

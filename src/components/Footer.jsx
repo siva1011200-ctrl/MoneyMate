@@ -8,7 +8,7 @@ py-4
 text-gray-500
 ">
 
-© 2026 MoneyMate
+© {new Date().getFullYear()} MoneyMate
 
 </footer>
 

@@ -1,20 +1,22 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import MainLayout from "../layouts/MainLayout";
 import Card from "../components/Card";
 
 import AuthContext from "../context/AuthContext";
+import { userAPI } from "../services/api-service";
 
 
 function Profile(){
 
 
-const { user } = useContext(AuthContext);
+const { user, setUser } = useContext(AuthContext);
 
 
 
 const [edit,setEdit]=useState(false);
-
+const [saving, setSaving] = useState(false);
+const [saveError, setSaveError] = useState("");
 
 
 const [profile,setProfile]=useState({
@@ -26,6 +28,17 @@ email:user?.email || "",
 type:user?.type || "Student"
 
 });
+
+// Sync profile state when user changes
+useEffect(() => {
+  if (user) {
+    setProfile({
+      name: user.name || "",
+      email: user.email || "",
+      type: user.type || "Student"
+    });
+  }
+}, [user]);
 
 
 
@@ -243,8 +256,32 @@ Freelancer
 
 
 <button
-
-onClick={()=>setEdit(!edit)}
+type="button"
+onClick={async () => {
+  if (!edit) {
+    setEdit(true);
+    return;
+  }
+  setSaving(true);
+  setSaveError("");
+  try {
+    const res = await userAPI.updateProfile({
+      name: profile.name,
+      email: profile.email,
+      type: profile.type.toLowerCase(),
+    });
+    // Update local user state and AuthContext
+    const updatedUser = res.data;
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+    setEdit(false);
+  } catch (err) {
+    const detail = err.response?.data?.detail;
+    setSaveError(Array.isArray(detail) ? detail[0]?.msg : detail || "Failed to save profile");
+  } finally {
+    setSaving(false);
+  }
+}}
 
 className="
 mt-6
@@ -257,11 +294,13 @@ rounded-xl
 
 >
 
+{ saveError && <p className="text-red-500 mb-2">{saveError}</p> }
+
 {
 
 edit
 ?
-"Save Profile"
+(saving ? "Saving..." : "Save Profile")
 :
 "Edit Profile"
 

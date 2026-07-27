@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import FinanceContext from "./FinanceContext";
 import AuthContext from "./AuthContext";
-import { incomeAPI, expenseAPI, budgetAPI, savingsAPI, dashboardAPI } from "../services/api-service";
+import { incomeAPI, expenseAPI, budgetAPI, savingsAPI } from "../services/api-service";
 import { handleApiError } from "../utils/apiErrorHandler";
 
 function FinanceProvider({ children }) {
@@ -16,20 +16,6 @@ function FinanceProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [operationLoading, setOperationLoading] = useState({});
-
-  // Fetch all data when user authenticates
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchAllData();
-    } else {
-      // Clear data when user logs out
-      setIncomeList([]);
-      setExpenseList([]);
-      setTransactionList([]);
-      setBudgetList([]);
-      setSavingsGoalList([]);
-    }
-  }, [isAuthenticated]);
 
   const fetchAllData = async () => {
     setLoading(true);
@@ -61,6 +47,25 @@ function FinanceProvider({ children }) {
     }
     setLoading(false);
   };
+
+  // Fetch all data when user authenticates
+  /* eslint-disable react-hooks/set-state-in-effect */
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchAllData();
+    } else {
+      // Clear data when user logs out
+      const clearData = () => {
+        setIncomeList([]);
+        setExpenseList([]);
+        setTransactionList([]);
+        setBudgetList([]);
+        setSavingsGoalList([]);
+      };
+      clearData();
+    }
+  }, [isAuthenticated]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const setOpLoading = (operation, isLoading) => {
     setOperationLoading(prev => ({ ...prev, [operation]: isLoading }));

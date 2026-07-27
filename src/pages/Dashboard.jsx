@@ -63,7 +63,7 @@ text-3xl
 font-bold
 ">
 
-Good Morning, {user?.name || "User"} 👋
+{user?.name || "User"} 👋
 
 </h1>
 

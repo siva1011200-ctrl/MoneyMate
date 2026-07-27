@@ -15,6 +15,7 @@ router = APIRouter(prefix="/expenses", tags=["Expenses"])
 
 
 @router.get("/categories")
+@router.get("/categories/", include_in_schema=False)
 def list_categories(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -29,6 +30,7 @@ def list_categories(
 
 
 @router.get("/", response_model=PaginatedResponse[ExpenseResponse])
+@router.get("", response_model=PaginatedResponse[ExpenseResponse])
 def list_expenses(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),

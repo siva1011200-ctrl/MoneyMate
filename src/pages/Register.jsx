@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { userAPI } from "../services/api-service";
+import AuthContext from "../context/AuthContext";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { registerWithCredentials } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -29,21 +30,21 @@ const Register = () => {
       setLoading(true);
       setError("");
 
-      const response = await userAPI.register(formData);
+      const result = await registerWithCredentials(
+        formData.name,
+        formData.email,
+        formData.password,
+        formData.type,
+      );
 
-      if (response.data) {
-        navigate("/login");
-      }
-
-    } catch (err) {
-      const detail = err.response?.data?.detail;
-
-      if (Array.isArray(detail)) {
-        setError(detail[0]?.msg || "Registration failed");
+      if (result.success) {
+        navigate("/dashboard");
       } else {
-        setError(detail || "Registration failed");
+        setError(result.error);
       }
 
+    } catch {
+      setError("Registration failed");
     } finally {
       setLoading(false);
     }

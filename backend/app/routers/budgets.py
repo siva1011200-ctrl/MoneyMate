@@ -6,6 +6,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from sqlalchemy import func
+
 from ..database import get_db
 from ..dependencies import get_current_user
 from ..models import Budget, Expense, User
@@ -20,20 +22,13 @@ router_legacy = APIRouter(prefix="/budget", tags=["Budgets (Legacy)"])
 
 
 def _calculate_spent(db: Session, user_id: int, category: str, month: int, year: int) -> Decimal:
-    expenses = (
-        db.query(Expense)
-        .filter(
-            Expense.user_id == user_id,
-            Expense.category == category,
-            Expense.date >= datetime(year, month, 1),
-            Expense.date < datetime(year, month + 1, 1) if month < 12 else datetime(year + 1, 1, 1)
-        )
-        .all()
-    )
-    total = Decimal('0')
-    for expense in expenses:
-        total += expense.amount
-    return total
+    result = db.query(func.coalesce(func.sum(Expense.amount), 0)).filter(
+        Expense.user_id == user_id,
+        Expense.category == category,
+        Expense.date >= datetime(year, month, 1),
+        Expense.date < (datetime(year, month + 1, 1) if month < 12 else datetime(year + 1, 1, 1))
+    ).scalar()
+    return result
 
 
 def _serialize_budget(db: Session, budget: Budget) -> BudgetResponse:
@@ -55,6 +50,7 @@ def _serialize_budget(db: Session, budget: Budget) -> BudgetResponse:
 
 
 @router.get("/", response_model=list[BudgetResponse])
+@router.get("", response_model=list[BudgetResponse])
 def list_budgets(
     month: Optional[int] = Query(None, ge=1, le=12),
     year: Optional[int] = Query(None, ge=2000, le=2100),
@@ -76,11 +72,11 @@ def list_budgets(
         .all()
     )
 
-    responses = [_serialize_budget(db, budget).model_dump() for budget in budgets]
-    check_budget_alerts(db, current_user, responses)
+    responses = [_serialize_budget(db, budget) for budget in budgets]
+    check_budget_alerts(db, current_user, [r.model_dump() for r in responses])
     db.commit()
 
-    return [_serialize_budget(db, budget) for budget in budgets]
+    return responses
 
 
 @router.post("/", response_model=BudgetResponse, status_code=status.HTTP_201_CREATED)

@@ -16,7 +16,7 @@ router_legacy = APIRouter(prefix="/savings", tags=["Savings Goals (Legacy)"])
 
 
 def _serialize_goal(goal: SavingsGoal) -> SavingsGoalResponse:
-    progress = min(float((goal.saved / goal.target) * 100), 100) if goal.target else 0
+    progress = min(float((goal.saved / goal.target) * 100), 100) if goal.target and goal.target > 0 else 0
     return SavingsGoalResponse(
         id=goal.id,
         goal=goal.goal,
@@ -29,6 +29,7 @@ def _serialize_goal(goal: SavingsGoal) -> SavingsGoalResponse:
 
 
 @router.get("/", response_model=list[SavingsGoalResponse])
+@router.get("", response_model=list[SavingsGoalResponse])
 def list_savings_goals(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
