@@ -36,9 +36,8 @@ services:
     startCommand: python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: DATABASE_URL
-        fromDatabase:
-          name: moneymate-db
-          property: connectionString
+        value: "postgresql+psycopg2://user:password@host:port/database"
+        sync: false
       - key: JWT_SECRET_KEY
         generateValue: true
         length: 64
@@ -52,9 +51,3 @@ services:
         value: 20
       - key: DB_POOL_RECYCLE
         value: 3600
-
-databases:
-  - name: moneymate-db
-    databaseName: moneymate
-    user: moneymate_user
-    plan: free
