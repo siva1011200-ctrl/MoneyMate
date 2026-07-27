@@ -56,7 +56,7 @@ try{
 const result = await addIncome({
   source: form.source,
   amount: Number(form.amount),
-  date: form.date,
+  date: new Date(form.date).toISOString(),
   description: form.description
 });
 

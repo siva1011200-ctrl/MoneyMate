@@ -49,7 +49,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   const newExpense = {
-    date: form.date,
+    date: new Date(form.date).toISOString(),
     category: form.category,
     amount: Number(form.amount),
     description: form.description
