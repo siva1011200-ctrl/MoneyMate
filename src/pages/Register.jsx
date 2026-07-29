@@ -15,6 +15,7 @@ const Register = () => {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -43,7 +44,8 @@ const Register = () => {
         setError(result.error);
       }
 
-    } catch {
+    } catch (err) {
+      console.error("Registration error:", err);
       setError("Registration failed");
     } finally {
       setLoading(false);
@@ -51,9 +53,9 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center p-4">
 
-      <div className="w-full max-w-md p-6 rounded-lg shadow">
+      <div className="w-full max-w-md p-6 rounded-lg shadow bg-white">
 
         <h1 className="text-2xl font-bold mb-4">
           Create Account
@@ -73,8 +75,9 @@ const Register = () => {
             placeholder="Full Name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-3 rounded-lg"
             required
+            autoComplete="name"
           />
 
           <input
@@ -83,26 +86,37 @@ const Register = () => {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-3 rounded-lg"
             required
+            autoComplete="email"
           />
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password (min 12 characters)"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full border p-2 rounded"
-            required
-            minLength={12}
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password (min 12 characters)"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full border p-3 rounded-lg pr-12"
+              required
+              minLength={12}
+              autoComplete="new-password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
 
           <select
             name="type"
             value={formData.type}
             onChange={handleChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-3 rounded-lg"
           >
             <option value="student">Student</option>
             <option value="employee">Employee</option>
@@ -112,7 +126,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white p-2 rounded"
+            className="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-blue-400"
           >
             {loading ? "Creating..." : "Register"}
           </button>
