@@ -54,10 +54,23 @@ function AuthProvider({ children }) {
     setError(null);
     try {
       const response = await userAPI.register({ name, email, password, type });
+      
+      // Defensive check for response structure
+      if (!response || !response.data) {
+        throw new Error("Invalid response from server");
+      }
+      
       const { user, access_token } = response.data;
+      
+      if (!user || !access_token) {
+        console.error("Invalid response data:", response.data);
+        throw new Error("Server returned incomplete data");
+      }
+      
       await login(user, access_token);
       return { success: true };
     } catch (err) {
+      console.error("Registration error:", err);
       const errorMessage = handleApiError(err);
       setError(errorMessage);
       return { success: false, error: errorMessage };
