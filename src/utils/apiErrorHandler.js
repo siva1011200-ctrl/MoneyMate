@@ -32,6 +32,13 @@ export const handleApiError = (error) => {
     case 409:
       return data?.detail || 'Resource already exists.';
     case 422:
+      // Handle FastAPI validation errors which may be arrays or objects
+      if (Array.isArray(data?.detail)) {
+        return data.detail.map(err => err.msg || err).join(', ');
+      }
+      if (typeof data?.detail === 'object') {
+        return JSON.stringify(data.detail);
+      }
       return data?.detail || 'Validation error. Please check your input.';
     case 429:
       return 'Too many requests. Please wait and try again.';

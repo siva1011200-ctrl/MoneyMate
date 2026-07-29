@@ -16,16 +16,54 @@ const Register = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+    
+    // Validate password when it changes
+    if (e.target.name === "password") {
+      validatePassword(e.target.value);
+    }
+  };
+
+  const validatePassword = (password) => {
+    const errors = [];
+    
+    if (password.length < 12) {
+      errors.push("at least 12 characters");
+    }
+    if (!/[A-Z]/.test(password)) {
+      errors.push("uppercase letter");
+    }
+    if (!/[a-z]/.test(password)) {
+      errors.push("lowercase letter");
+    }
+    if (!/\d/.test(password)) {
+      errors.push("digit");
+    }
+    if (!/[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/.test(password)) {
+      errors.push("special character");
+    }
+    
+    if (errors.length > 0) {
+      setPasswordError(`Password must contain: ${errors.join(", ")}`);
+    } else {
+      setPasswordError("");
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate password before submission
+    if (passwordError) {
+      setError("Please fix password errors before submitting");
+      return;
+    }
 
     try {
       setLoading(true);
@@ -66,6 +104,12 @@ const Register = () => {
         {error && (
           <p className="text-red-500 mb-3">
             {error}
+          </p>
+        )}
+
+        {passwordError && (
+          <p className="text-red-500 mb-3 text-sm">
+            {passwordError}
           </p>
         )}
 
