@@ -93,9 +93,9 @@ return(
 
 
 <h1 className="
-text-3xl
+text-2xl sm:text-3xl
 font-bold
-mb-6
+mb-4 md:mb-6
 ">
 
 Income Management
@@ -109,9 +109,9 @@ Income Management
 <Card>
 
 <h2 className="
-text-xl
+text-lg sm:text-xl
 font-bold
-mb-5
+mb-4 md:mb-5
 ">
 
 Income Records
@@ -213,14 +213,14 @@ className="border-b"
 
 
 
-<div className="mt-6">
+<div className="mt-4 md:mt-6">
 
 
 <Card>
 
 
 <h2 className="
-text-xl
+text-lg sm:text-xl
 font-bold
 mb-4
 ">
@@ -313,9 +313,9 @@ type="submit"
 className="
 bg-blue-600
 text-white
-px-6
-py-3
+px-6 py-3
 rounded-xl
+w-full sm:w-auto
 "
 
 >

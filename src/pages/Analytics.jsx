@@ -172,9 +172,9 @@ return(
 
 
 <h1 className="
-text-3xl
+text-2xl sm:text-3xl
 font-bold
-mb-6
+mb-4 md:mb-6
 ">
 
 Financial Analytics
@@ -187,8 +187,9 @@ Financial Analytics
 
 <div className="
 grid
-md:grid-cols-2
-gap-6
+grid-cols-1
+sm:grid-cols-2
+gap-4 md:gap-6
 ">
 
 
@@ -200,9 +201,9 @@ gap-6
 <Card>
 
 <h2 className="
-text-xl
+text-lg sm:text-xl
 font-bold
-mb-5
+mb-4 md:mb-5
 ">
 
 Income vs Expense
@@ -258,9 +259,9 @@ dataKey="expense"
 
 
 <h2 className="
-text-xl
+text-lg sm:text-xl
 font-bold
-mb-5
+mb-4 md:mb-5
 ">
 
 Savings Growth
@@ -317,9 +318,9 @@ dataKey="income"
 
 
 <h2 className="
-text-xl
+text-lg sm:text-xl
 font-bold
-mb-5
+mb-4 md:mb-5
 ">
 
 Expense Categories

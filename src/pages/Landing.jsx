@@ -12,7 +12,7 @@ min-h-screen
 bg-gradient-to-br
 from-blue-50
 to-indigo-100
-p-6
+p-4 sm:p-6
 ">
 
 
@@ -22,10 +22,11 @@ p-6
 max-w-6xl
 mx-auto
 grid
+grid-cols-1
 md:grid-cols-2
-gap-10
+gap-6 md:gap-10
 items-center
-py-20
+py-12 md:py-20
 ">
 
 
@@ -49,7 +50,7 @@ duration:0.6
 
 
 <h1 className="
-text-5xl
+text-3xl sm:text-4xl md:text-5xl
 font-bold
 leading-tight
 ">
@@ -66,8 +67,8 @@ text-blue-600
 
 
 <p className="
-mt-6
-text-lg
+mt-4 md:mt-6
+text-base md:text-lg
 text-gray-600
 ">
 
@@ -81,8 +82,9 @@ powerful platform.
 
 <div className="
 flex
-gap-4
-mt-8
+flex-col sm:flex-row
+gap-3 sm:gap-4
+mt-6 md:mt-8
 ">
 
 
@@ -91,11 +93,12 @@ mt-8
 <button className="
 bg-blue-600
 text-white
-px-8
+px-6 sm:px-8
 py-3
 rounded-xl
 hover:scale-105
 transition
+w-full sm:w-auto
 ">
 
 Get Started
@@ -111,9 +114,10 @@ Get Started
 <button className="
 border
 border-blue-600
-px-8
+px-6 sm:px-8
 py-3
 rounded-xl
+w-full sm:w-auto
 ">
 
 Login
@@ -146,7 +150,7 @@ repeat:Infinity
 className="
 glass
 rounded-3xl
-p-10
+p-6 sm:p-8 md:p-10
 text-center
 "
 
@@ -154,7 +158,7 @@ text-center
 
 
 <div className="
-text-7xl
+text-5xl sm:text-6xl md:text-7xl
 ">
 
 💰
@@ -163,9 +167,9 @@ text-7xl
 
 
 <h2 className="
-text-2xl
+text-xl sm:text-2xl
 font-bold
-mt-5
+mt-4 md:mt-5
 ">
 
 Smart Finance Dashboard
@@ -194,15 +198,15 @@ Track every rupee easily.
 <section className="
 max-w-6xl
 mx-auto
-py-10
+py-8 md:py-10
 ">
 
 
 <h2 className="
-text-3xl
+text-2xl sm:text-3xl
 font-bold
 text-center
-mb-10
+mb-6 md:mb-10
 ">
 
 Powerful Features
@@ -213,8 +217,10 @@ Powerful Features
 
 <div className="
 grid
+grid-cols-1
+sm:grid-cols-2
 md:grid-cols-3
-gap-6
+gap-4 md:gap-6
 ">
 
 
@@ -276,15 +282,15 @@ Visualize your money growth.
 <section className="
 max-w-6xl
 mx-auto
-py-10
+py-8 md:py-10
 ">
 
 
 <h2 className="
-text-3xl
+text-2xl sm:text-3xl
 font-bold
 text-center
-mb-10
+mb-6 md:mb-10
 ">
 
 Built For Everyone
@@ -295,8 +301,10 @@ Built For Everyone
 
 <div className="
 grid
+grid-cols-1
+sm:grid-cols-2
 md:grid-cols-3
-gap-6
+gap-4 md:gap-6
 ">
 
 
@@ -358,7 +366,7 @@ Manage projects and income.
 <section className="
 max-w-6xl
 mx-auto
-py-20
+py-12 md:py-20
 text-center
 ">
 
@@ -366,12 +374,12 @@ text-center
 <div className="
 glass
 rounded-3xl
-p-10
+p-6 sm:p-8 md:p-10
 ">
 
 
 <h2 className="
-text-4xl
+text-2xl sm:text-3xl md:text-4xl
 font-bold
 ">
 
@@ -384,12 +392,13 @@ Start Managing Your Money Today
 
 
 <button className="
-mt-6
+mt-4 md:mt-6
 bg-blue-600
 text-white
-px-10
+px-6 sm:px-8 md:px-10
 py-3
 rounded-xl
+w-full sm:w-auto
 ">
 
 Create Free Account

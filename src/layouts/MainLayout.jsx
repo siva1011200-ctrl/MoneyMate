@@ -20,7 +20,7 @@ return(
 <Navbar/>
 
 
-<main className="p-6 flex-1">
+<main className="p-4 md:p-6 flex-1">
 
 <PageAnimation>
 

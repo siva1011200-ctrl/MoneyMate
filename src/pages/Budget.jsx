@@ -62,9 +62,9 @@ return(
 
 
 <h1 className="
-text-3xl
+text-2xl sm:text-3xl
 font-bold
-mb-6
+mb-4 md:mb-6
 ">
 
 Budget Planner
@@ -78,9 +78,9 @@ Budget Planner
 
 
 <h2 className="
-text-xl
+text-lg sm:text-xl
 font-bold
-mb-5
+mb-4 md:mb-5
 ">
 
 Monthly Budgets
@@ -91,8 +91,10 @@ Monthly Budgets
 
 <div className="
 grid
+grid-cols-1
+sm:grid-cols-2
 md:grid-cols-3
-gap-6
+gap-4 md:gap-6
 ">
 
 
@@ -197,12 +199,12 @@ item.limit && (item.spent/item.limit)*100 >= 80
 
 
 
-<div className="mt-6">
+<div className="mt-4 md:mt-6">
 
 <Card>
 
 <h2 className="
-text-xl
+text-lg sm:text-xl
 font-bold
 mb-4
 ">
@@ -267,9 +269,9 @@ type="submit"
 className="
 bg-blue-600
 text-white
-px-6
-py-3
+px-6 py-3
 rounded-xl
+w-full sm:w-auto
 "
 
 >

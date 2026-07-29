@@ -66,9 +66,9 @@ return(
 
 
 <h1 className="
-text-3xl
+text-2xl sm:text-3xl
 font-bold
-mb-6
+mb-4 md:mb-6
 ">
 
 Profile
@@ -83,9 +83,9 @@ Profile
 
 
 <h2 className="
-text-2xl
+text-xl sm:text-2xl
 font-bold
-mb-5
+mb-4 md:mb-5
 ">
 
 User Information
@@ -284,12 +284,12 @@ onClick={async () => {
 }}
 
 className="
-mt-6
+mt-4 md:mt-6
 bg-blue-600
 text-white
-px-6
-py-3
+px-6 py-3
 rounded-xl
+w-full sm:w-auto
 "
 
 >
@@ -318,14 +318,14 @@ edit
 
 
 
-<div className="mt-6">
+<div className="mt-4 md:mt-6">
 
 
 <Card>
 
 
 <h2 className="
-text-xl
+text-lg sm:text-xl
 font-bold
 mb-4
 ">

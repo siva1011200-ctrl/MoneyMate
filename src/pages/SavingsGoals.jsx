@@ -59,9 +59,9 @@ return(
 
 
 <h1 className="
-text-3xl
+text-2xl sm:text-3xl
 font-bold
-mb-6
+mb-4 md:mb-6
 ">
 
 Savings Goals
@@ -74,8 +74,9 @@ Savings Goals
 
 <div className="
 grid
-md:grid-cols-2
-gap-6
+grid-cols-1
+sm:grid-cols-2
+gap-4 md:gap-6
 ">
 
 
@@ -181,12 +182,12 @@ Completed
 
 
 
-<div className="mt-6">
+<div className="mt-4 md:mt-6">
 
 <Card>
 
 <h2 className="
-text-xl
+text-lg sm:text-xl
 font-bold
 mb-4
 ">
@@ -236,9 +237,9 @@ type="submit"
 className="
 bg-green-600
 text-white
-px-6
-py-3
+px-6 py-3
 rounded-xl
+w-full sm:w-auto
 "
 
 >

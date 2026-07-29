@@ -114,9 +114,9 @@ return(
 
 
 <h1 className="
-text-3xl
+text-2xl sm:text-3xl
 font-bold
-mb-6
+mb-4 md:mb-6
 ">
 
 Transaction History
@@ -132,8 +132,8 @@ Transaction History
 flex
 flex-col
 md:flex-row
-gap-4
-mb-6
+gap-3 md:gap-4
+mb-4 md:mb-6
 ">
 
 

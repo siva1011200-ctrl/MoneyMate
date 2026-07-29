@@ -56,10 +56,10 @@ return(
 <MainLayout>
 
 
-<div className="mb-8">
+<div className="mb-6 md:mb-8">
 
 <h1 className="
-text-3xl
+text-2xl sm:text-3xl
 font-bold
 ">
 
@@ -82,21 +82,23 @@ Here is your financial overview
 
 <div className="
 grid
+grid-cols-2
+sm:grid-cols-3
 md:grid-cols-4
-gap-6
-mb-8
+gap-4 md:gap-6
+mb-6 md:mb-8
 ">
 
 
 <Card>
-<h3 className="text-gray-500">
+<h3 className="text-gray-500 text-sm md:text-base">
 Total Income
 </h3>
 
 <p className="
-text-3xl
+text-2xl md:text-3xl
 font-bold
-mt-3
+mt-2 md:mt-3
 text-green-600
 ">
 
@@ -111,14 +113,14 @@ text-green-600
 
 <Card>
 
-<h3 className="text-gray-500">
+<h3 className="text-gray-500 text-sm md:text-base">
 Total Expenses
 </h3>
 
 <p className="
-text-3xl
+text-2xl md:text-3xl
 font-bold
-mt-3
+mt-2 md:mt-3
 text-red-600
 ">
 
@@ -133,14 +135,14 @@ text-red-600
 
 <Card>
 
-<h3 className="text-gray-500">
+<h3 className="text-gray-500 text-sm md:text-base">
 Total Savings
 </h3>
 
 <p className="
-text-3xl
+text-2xl md:text-3xl
 font-bold
-mt-3
+mt-2 md:mt-3
 text-blue-600
 ">
 
@@ -155,14 +157,14 @@ text-blue-600
 
 <Card>
 
-<h3 className="text-gray-500">
+<h3 className="text-gray-500 text-sm md:text-base">
 Savings Percentage
 </h3>
 
 <p className="
-text-3xl
+text-2xl md:text-3xl
 font-bold
-mt-3
+mt-2 md:mt-3
 ">
 
 {savingsPercentage}%
@@ -182,9 +184,9 @@ mt-3
 <Card>
 
 <h2 className="
-text-xl
+text-lg sm:text-xl
 font-bold
-mb-4
+mb-3 md:mb-4
 ">
 
 Monthly Summary
@@ -194,8 +196,10 @@ Monthly Summary
 
 <div className="
 grid
+grid-cols-1
+sm:grid-cols-2
 md:grid-cols-3
-gap-5
+gap-4 md:gap-5
 ">
 
 
@@ -246,15 +250,15 @@ Saved
 
 
 
-<div className="mt-8">
+<div className="mt-6 md:mt-8">
 
 
 <Card>
 
 <h2 className="
-text-xl
+text-lg sm:text-xl
 font-bold
-mb-5
+mb-4 md:mb-5
 ">
 
 Recent Transactions
