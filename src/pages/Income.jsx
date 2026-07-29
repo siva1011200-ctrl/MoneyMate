@@ -56,7 +56,7 @@ try{
 const result = await addIncome({
   source: form.source,
   amount: Number(form.amount),
-  date: new Date(form.date).toISOString(),
+  date: form.date ? new Date(form.date + 'T00:00:00').toISOString() : new Date().toISOString(),
   description: form.description
 });
 
@@ -73,8 +73,9 @@ if (result.success) {
 
 }
 
-catch{
+catch(error){
 
+console.error("Add income error:", error);
 alert("Failed to add income");
 
 }
@@ -272,6 +273,8 @@ placeholder="Amount"
 
 name="date"
 
+type="date"
+
 value={form.date}
 
 onChange={handleChange}
@@ -279,6 +282,8 @@ onChange={handleChange}
 className="border p-3 rounded-xl w-full mb-3"
 
 placeholder="Date"
+
+required
 
 />
 
